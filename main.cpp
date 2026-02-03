@@ -55,24 +55,54 @@ Designer* lireDesigner(istream& fichier)
 
 
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
+void agrandirListeJeux(ListeJeux& liste)
+{
+    // Si capacite initiale nulle
+    if (liste.capacite == 0) {
+        liste.capacite = 1;
+        liste.elements = new Jeu*[liste.capacite];
+        return;
+    }
 
+    // Si capacite insuffisante
+    if (liste.nElements >= liste.capacite) {
+        unsigned nouvelleCapacite = liste.capacite * 2;
+		// Boucle de reallocation
+        Jeu** tableauAgrandi = new Jeu*[nouvelleCapacite];
+        for (unsigned i = 0; i < liste.nElements; ++i)
+            tableauAgrandi[i] = liste.elements[i];
+        delete[] liste.elements;
+		// Mise a jour 
+        liste.elements = tableauAgrandi;
+        liste.capacite = nouvelleCapacite;
+    }
+}
 
 //TODO: Fonction pour ajouter un Jeu à ListeJeux.
-
 void ajouterJeu(ListeJeux& liste, Jeu* jeu)
 {
-	if (liste.capacite == 0) 
-		liste.capacite = 1;
-	if (liste.nElements >= liste.capacite) {
-		unsigned nouvelleCapacite = liste.capacite * 2;
-		liste.capacite = nouvelleCapacite;
-	}
-	liste.elements[liste.nElements] = jeu;
-	liste.nElements++;
+	// Verification de la taille du tableau et ajustement
+	agrandirListeJeux(liste);
+	// Ajout du jeu au tableau
+	liste.elements[liste.nElements++] = jeu;
 }
 
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
+void enleverJeu(ListeJeux& liste, Jeu* target)
+{
+	// Trouver l'index du jeu en question
+	for (unsigned i = 0; i < liste.nElements; i++) {
+		Jeu* jeu = liste.elements[i];
+		if (jeu == target) {
+			for (auto j = i; j < liste.nElements -1; j++) 
+				liste.elements[j] = liste.elements[j + 1];
+			liste.nElements--;
+			break;	
+		}
+	}
+}
+
 
 Jeu* lireJeu(istream& fichier)
 {
