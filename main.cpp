@@ -70,6 +70,7 @@ void agrandirListeJeux(ListeJeux& liste)
         unsigned nouvelleCapacite = liste.capacite * 2;
 		// Boucle de reallocation
         Jeu** tableauAgrandi = new Jeu*[nouvelleCapacite];
+		// Copie des jeux dans le nouveau tableau
         for (unsigned i = 0; i < liste.nElements; ++i)
             tableauAgrandi[i] = liste.elements[i];
         delete[] liste.elements;
@@ -116,13 +117,17 @@ Jeu* lireJeu(istream& fichier)
 	//TODO: Ajouter en mémoire le jeu lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du jeu est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-
+	Jeu* targetJeu = new Jeu(jeu);
+	cout << targetJeu->titre << endl;
 
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
-		lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+		Designer* designer = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+		targetJeu->designers.elements[i] = designer;
+		targetJeu->designers.nElements++;
 		//TODO: Ajouter le jeu à la liste des jeux auquel a participé le designer.
+		ajouterJeu(designer->listeJeuxParticipes, targetJeu);
 	}
-	return {}; //TODO: Retourner le pointeur vers le nouveau jeu.
+	return targetJeu; //TODO: Retourner le pointeur vers le nouveau jeu.
 }
 
 ListeJeux creerListeJeux(const string& nomFichier)
