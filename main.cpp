@@ -118,7 +118,7 @@ Jeu* lireJeu(istream& fichier)
 	// TIP: Afficher un message lorsque l'allocation du jeu est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
 	Jeu* targetJeu = new Jeu(jeu);
-	cout << targetJeu->titre << endl;
+	cout << targetJeu->titre << " added" << endl;
 
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
 		Designer* designer = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
@@ -154,10 +154,31 @@ ListeJeux creerListeJeux(const string& nomFichier)
 //TODO: Fonction pour afficher les infos d'un designer.
 
 //TODO: Fonction pour afficher les infos d'un jeu ainsi que ses designers.
+void afficherJeu(const Jeu* jeu)
+{
+	cout << "Titre: " << jeu->titre << "\n";
+	cout << "Annee de sortie: " << jeu->anneeSortie << "\n";
+	cout << "Developpeur: " << jeu->developpeur << "\n";
+	cout << "List des designers: " << "\n";
+	for (unsigned i = 0; i < jeu->designers.nElements; i++) {
+		Designer* designer = jeu->designers.elements[i];
+		cout << " - " << designer->nom << endl;
+	}
+}
 
 
 //TODO: Fonction pour afficher tous les jeux de ListeJeux, séparés par un ligne.
 // Votre ligne de séparation doit être différent de celle utilisée dans le main.
+void afficherListejeux(const ListeJeux* liste)
+{
+	const string separateur = "\n\033[36m────────────────────────────────────────\033[0m\n";
+	for (unsigned i = 0; i < liste->nElements; i++) {
+		cout << "Jeu #" << i + 1 << "\n";
+		afficherJeu(liste->elements[i]);
+		if (i != liste->nElements) 
+			cout << separateur;
+	}
+}
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
@@ -172,12 +193,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
 
 	creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
+	
 
 	static const string ligneSeparation = "\n\033[35m════════════════════════════════════════\033[0m\n";
 	cout << ligneSeparation << endl;
 	cout << "Premier jeu de la liste :" << endl;
 	//TODO: Afficher le premier jeu de la liste (en utilisant la fonction).  Devrait être Chrono Trigger.
-
+	afficherJeu()
 	cout << ligneSeparation << endl;
 
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
