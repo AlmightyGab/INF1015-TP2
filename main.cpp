@@ -130,19 +130,22 @@ Jeu* lireJeu(istream& fichier)
 	return targetJeu; //TODO: Retourner le pointeur vers le nouveau jeu.
 }
 
+
 ListeJeux creerListeJeux(const string& nomFichier)
 {
 	ifstream fichier(nomFichier, ios::binary);
 	fichier.exceptions(ios::failbit);
 	int nElements = lireUint16(fichier);
 	ListeJeux listeJeux = {};
-	for ([[maybe_unused]] int n : iter::range(nElements))
-	{
-		lireJeu(fichier); //TODO: Ajouter le jeu à la ListeJeux.
+	for ([[maybe_unused]] int n : iter::range(nElements)) {
+		//TODO: Ajouter le jeu à la ListeJeux.
+		Jeu* jeu = lireJeu(fichier);
+		ajouterJeu(listeJeux, jeu);
 	}
 
-	return {}; //TODO: Renvoyer la ListeJeux.
+	return listeJeux; //TODO: Renvoyer la ListeJeux.
 }
+
 
 //TODO: Fonction pour détruire un jeu (libération de mémoire allouée).
 // TIP: Afficher un message lorsque le jeu est détruit pour aider au débogage.
@@ -169,13 +172,13 @@ void afficherJeu(const Jeu* jeu)
 
 //TODO: Fonction pour afficher tous les jeux de ListeJeux, séparés par un ligne.
 // Votre ligne de séparation doit être différent de celle utilisée dans le main.
-void afficherListejeux(const ListeJeux* liste)
+void afficherListeJeux(const ListeJeux& liste)
 {
 	const string separateur = "\n\033[36m────────────────────────────────────────\033[0m\n";
-	for (unsigned i = 0; i < liste->nElements; i++) {
+	for (unsigned i = 0; i < liste.nElements; i++) {
 		cout << "Jeu #" << i + 1 << "\n";
-		afficherJeu(liste->elements[i]);
-		if (i != liste->nElements) 
+		afficherJeu(liste.elements[i]);
+		if (i != liste.nElements) 
 			cout << separateur;
 	}
 }
@@ -192,17 +195,17 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
 
-	creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
+	ListeJeux listeJeux = creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
 	
-
 	static const string ligneSeparation = "\n\033[35m════════════════════════════════════════\033[0m\n";
 	cout << ligneSeparation << endl;
 	cout << "Premier jeu de la liste :" << endl;
 	//TODO: Afficher le premier jeu de la liste (en utilisant la fonction).  Devrait être Chrono Trigger.
-	afficherJeu()
+	afficherJeu(listeJeux.elements[0]);
 	cout << ligneSeparation << endl;
 
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
+	afficherListeJeux(listeJeux);
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
 
