@@ -56,27 +56,27 @@ Designer* lireDesigner(istream& fichier)
 
 
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
-void agrandirListeJeux(ListeJeux& liste)
+void agrandirListeJeux(ListeJeux& listeJeux)
 {
     // Si capacite initiale nulle
-    if (liste.capacite == 0) {
-        liste.capacite = 1;
-        liste.elements = new Jeu*[liste.capacite];
+    if (listeJeux.capacite == 0) {
+        listeJeux.capacite = 1;
+        listeJeux.elements = new Jeu*[listeJeux.capacite];
         return;
     }
 
     // Si capacite insuffisante
-    if (liste.nElements >= liste.capacite) {
-        unsigned nouvelleCapacite = liste.capacite * 2;
+    if (listeJeux.nElements >= listeJeux.capacite) {
+        unsigned nouvelleCapacite = listeJeux.capacite * 2;
 		// Boucle de reallocation
         Jeu** tableauAgrandi = new Jeu*[nouvelleCapacite];
 		// Copie des jeux dans le nouveau tableau
-        for (unsigned i = 0; i < liste.nElements; ++i)
-            tableauAgrandi[i] = liste.elements[i];
-        delete[] liste.elements;
+        for (unsigned i = 0; i < listeJeux.nElements; ++i)
+            tableauAgrandi[i] = listeJeux.elements[i];
+        delete[] listeJeux.elements;
 		// Mise a jour 
-        liste.elements = tableauAgrandi;
-        liste.capacite = nouvelleCapacite;
+        listeJeux.elements = tableauAgrandi;
+        listeJeux.capacite = nouvelleCapacite;
     }
 }
 
@@ -150,9 +150,18 @@ ListeJeux creerListeJeux(const string& nomFichier)
 //TODO: Fonction pour détruire un jeu (libération de mémoire allouée).
 // TIP: Afficher un message lorsque le jeu est détruit pour aider au débogage.
 // Vous pouvez enlever l'affichage une fois que le tout fonctionne.
+void detruireJeu(Jeu* jeu)
+{
+	cout << jeu->titre << " est maintenant detruit." << endl;
+	delete jeu;
+}
 
 
 //TODO: Fonction pour détruire une ListeJeux et tous ses jeux.
+void detruireListeJeux(ListeJeux& listeJeu)
+{
+
+}
 
 //TODO: Fonction pour afficher les infos d'un designer.
 
