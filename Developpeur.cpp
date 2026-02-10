@@ -22,7 +22,7 @@ Developpeur::~Developpeur()
 
 unsigned Developpeur::obtenirNombreJeux(const ListeJeux& listeJeux) const
 {
-    gsl::span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
+    const gsl::span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
     unsigned count = 0;
     for (auto jeu : spanJeux) {
         if (jeu->developpeur == nom_) 
@@ -37,7 +37,7 @@ void Developpeur::miseAJourJeux(const ListeJeux& listeJeux)
     jeux_.capacite = obtenirNombreJeux(listeJeux);
 
     Jeu** jeuxTemp = new Jeu*[jeux_.capacite];
-    gsl::span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
+    const gsl::span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
 
     for (auto jeu : spanJeux) {
         if (jeu->developpeur == nom_)
