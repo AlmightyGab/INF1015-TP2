@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 ListeDeveloppeurs::ListeDeveloppeurs()
 {
     nElements_ = 0;
@@ -93,3 +94,5 @@ void ListeDeveloppeurs::retirerDeveloppeur(Developpeur* dev)
         elements_[i] = elements_[i + 1];
     nElements_--;
 }
+
+int main() {return 0;}

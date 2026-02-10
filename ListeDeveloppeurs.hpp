@@ -1,5 +1,7 @@
 ﻿#pragma once
-#include "Developpeur.hpp"
+
+// Declaration avancee
+class Developpeur; 
 
 class ListeDeveloppeurs
 {
@@ -15,14 +17,13 @@ public:
 	// Methodes publiques
 	void afficher() const;
 
-	int trouverIndexDev(const Developpeur* dev) const;
-
 	void ajouterDeveloppeur(Developpeur* dev);
 
 	void retirerDeveloppeur(Developpeur* dev);
 	
 private:
-	// Methode pour agrandir la liste
+	// Methode privees
+	int trouverIndexDev(const Developpeur* dev) const;
 	void agrandirListe();
 
 	// Attributs prives de la liste 

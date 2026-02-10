@@ -5,6 +5,7 @@
 #include "ListeJeux.hpp"
 #include "Jeu.hpp"
 
+
 class Developpeur
 {
 	//TODO: En faire une classe qui suit les principes OO.
