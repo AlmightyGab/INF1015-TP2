@@ -35,7 +35,7 @@ add_executable(${PROJECT_NAME} ${ALL_FILES})
 ajouter_target_couverture(${PROJECT_NAME})  # Doit être après le "add_executable" et lui passer le même nom. Ajoute un cible ${PROJECT_NAME}_couverture pour obtenir la couverture de code avec gcov (si on trouve gcov).
 
 # On ajoute le dossier include/ fourni, comme des fichiers d'inclusion du système.
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE "include")
+target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC "include")
 
 
 # copier les fichiers binaires dans le dossier build

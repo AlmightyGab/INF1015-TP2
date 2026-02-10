@@ -94,25 +94,25 @@ void agrandirListeJeux(ListeJeux& listeJeux)
 }
 
 //TODO: Fonction pour ajouter un Jeu à ListeJeux.
-void ajouterJeu(ListeJeux& liste, Jeu* jeu)
+void ajouterJeu(ListeJeux& listeJeux, Jeu* jeu)
 {
 	// Verification de la taille du tableau et ajustement
-	agrandirListeJeux(liste);
+	agrandirListeJeux(listeJeux);
 	// Ajout du jeu au tableau
-	liste.elements[liste.nElements++] = jeu;
+	listeJeux.elements[listeJeux.nElements++] = jeu;
 }
 
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
-void enleverJeu(ListeJeux& liste, Jeu* target)
+void enleverJeu(ListeJeux& listeJeux, Jeu* target)
 {
 	// Trouver l'index du jeu en question
-	for (unsigned i = 0; i < liste.nElements; i++) {
-		Jeu* jeu = liste.elements[i];
+	for (unsigned i = 0; i < listeJeux.nElements; i++) {
+		Jeu* jeu = listeJeux.elements[i];
 		if (jeu == target) {
-			for (auto j = i; j < liste.nElements -1; j++) 
-				liste.elements[j] = liste.elements[j + 1];
-			liste.nElements--;
+			for (auto j = i; j < listeJeux.nElements -1; j++) 
+				listeJeux.elements[j] = listeJeux.elements[j + 1];
+			listeJeux.nElements--;
 			break;	
 		}
 	}
@@ -173,7 +173,9 @@ void detruireJeu(Jeu* jeu)
 //TODO: Fonction pour détruire une ListeJeux et tous ses jeux.
 void detruireListeJeux(ListeJeux& listeJeu)
 {
+	for (unsigned i = 0; i < listeJeu.nElements; i++) {
 
+	}
 }
 
 //TODO: Fonction pour afficher les infos d'un designer.
@@ -223,7 +225,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	// Permet sous Windows les "ANSI escape code" pour changer de couleur
 	// https://en.wikipedia.org/wiki/ANSI_escape_code ; les consoles Linux/Mac
 	// les supportent normalement par défaut.
-	bibliotheque_cours::activerCouleursAnsi();
+	// bibliotheque_cours::activerCouleursAnsi();
 #pragma endregion
 
 	int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
@@ -239,6 +241,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
 	afficherListeJeux(listeJeux);
+
+
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
 
