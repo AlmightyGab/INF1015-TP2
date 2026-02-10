@@ -37,6 +37,21 @@ string lireString(istream& fichier)
 #pragma endregion
 
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
+Designer* trouverDesigner(span<Jeu*>listeJeux, const string& nomDesignerRecherche)
+{
+	// for (auto i : range(ssize(lsJeux)))
+	// for (int i = 0; i < ListeJeux.size(); i++)
+	for (Jeu* jeu : listeJeux) {
+		for (unsigned i = 0; i < jeu->designers.nElements; i++) {
+			Designer* designer = jeu->designers.elements[i];
+			if (designer->nom == nomDesignerRecherche) {
+				return designer;
+			}
+		}
+	}
+	return nullptr; //return nullptr si le designer n’est pas trouvé
+}
+
 
 Designer* lireDesigner(istream& fichier)
 {
@@ -164,6 +179,17 @@ void detruireListeJeux(ListeJeux& listeJeu)
 }
 
 //TODO: Fonction pour afficher les infos d'un designer.
+void afficherInfoDesigner(const Designer* designer){
+	cout << "Nom: " << designer->nom << "\n";
+	cout << "Annee de naissance: " << designer->anneeNaissance << "\n";
+	cout << "Pays: " << designer->pays << "\n";
+	cout << "Liste des jeux participes: " << "\n";
+	for (unsigned i = 0; i < designer->listeJeuxParticipes.nElements; i++) {
+		Jeu* jeu = designer->listeJeuxParticipes.elements[i];
+		cout << " - " << jeu->titre << endl;
+	}
+}
+
 
 //TODO: Fonction pour afficher les infos d'un jeu ainsi que ses designers.
 void afficherJeu(const Jeu* jeu)
