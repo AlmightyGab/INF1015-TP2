@@ -163,20 +163,31 @@ ListeJeux creerListeJeux(const string& nomFichier)
 //TODO: Fonction pour détruire un jeu (libération de mémoire allouée).
 // TIP: Afficher un message lorsque le jeu est détruit pour aider au débogage.
 // Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-void detruireJeu(Jeu* jeu)
-{
-	cout << jeu->titre << " est maintenant detruit." << endl;
+void detruireJeu(Jeu* jeu) {
+	for (unsigned i = 0; i < jeu->designers.nElements; i++) {
+		Designer* designer = jeu->designers.elements[i];
+		enleverJeu(designer->listeJeuxParticipes, jeu);
+		//désallouer le designer s’il n’est plus dans aucun jeu
+		if (designer->listeJeuxParticipes.nElements == 0) {
+			//La mémoire liée à un designer doit être aussi libérée
+			delete[] designer->listeJeuxParticipes.elements;
+			delete designer;
+		}
+	}
+	delete[] jeu->designers.elements; //incluant le tableau dynamique de designers
 	delete jeu;
 }
 
 
 //TODO: Fonction pour détruire une ListeJeux et tous ses jeux.
-void detruireListeJeux(ListeJeux& listeJeu)
-{
+void detruireListeJeux(ListeJeux& listeJeu) {
 	for (unsigned i = 0; i < listeJeu.nElements; i++) {
-
+		detruireJeu(listeJeu.elements[i]);
 	}
+    delete[] listeJeu.elements;
 }
+
+
 
 //TODO: Fonction pour afficher les infos d'un designer.
 void afficherInfoDesigner(const Designer* designer){
@@ -245,6 +256,15 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
+	Designer* designer = trouverDesigner(span(listeJeux.elements, listeJeux.nElements), "Rob Pardo"); //existe
+	afficherInfoDesigner(designer);
+	cout << ligneSeparation << endl;
+	trouverDesigner(span(listeJeux.elements, listeJeux.nElements), "Ab Cde"); //existe pas
+	Jeu* target = listeJeux.elements[listeJeux.nElements -1];
+	enleverJeu(listeJeux, target);
+	detruireJeu(target);
+	cout << ligneSeparation << endl;
+	detruireListeJeux(listeJeux);	
 
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
