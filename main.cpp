@@ -134,17 +134,17 @@ Jeu* lireJeu(istream& fichier)
 	//TODO: Ajouter en mémoire le jeu lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du jeu est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-	Jeu* targetJeu = new Jeu(jeu);
-	cout << targetJeu->titre << " added" << endl;
+	Jeu* ptrJeu = new Jeu(jeu);
+	cout << ptrJeu->titre << " added" << endl;
 
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
 		Designer* designer = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
-		targetJeu->designers.elements[i] = designer;
-		targetJeu->designers.nElements++;
+		ptrJeu->designers.elements[i] = designer;
+		ptrJeu->designers.nElements++;
 		//TODO: Ajouter le jeu à la liste des jeux auquel a participé le designer.
-		ajouterJeu(designer->listeJeuxParticipes, targetJeu);
+		ajouterJeu(designer->listeJeuxParticipes, ptrJeu);
 	}
-	return targetJeu; //TODO: Retourner le pointeur vers le nouveau jeu.
+	return ptrJeu; //TODO: Retourner le pointeur vers le nouveau jeu.
 }
 
 
