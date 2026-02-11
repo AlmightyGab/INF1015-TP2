@@ -61,10 +61,14 @@ Designer* lireDesigner(istream& fichier)
 	//TODO: Ajouter en mémoire le designer lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du designer est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
+	Designer* ptrDesigner = new Designer;
+	ptrDesigner->nom = designer.nom;
+	ptrDesigner->anneeNaissance = designer.anneeNaissance;
+	ptrDesigner->pays = designer.pays;
+	//cout << "l'allocation du designer est réussie pour aider au débogage: " << ptrDesigner->nom << endl;
 
-
-	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
-	return {}; //TODO: Retourner le pointeur vers le designer crée.
+	//cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
+	return ptrDesigner; //TODO: Retourner le pointeur vers le designer crée.
 }
 
 
