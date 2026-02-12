@@ -384,6 +384,19 @@ void ajouterJeu(ListeJeux& listeJeux, Jeu* jeu)
 }
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
+ void enleverJeu(ListeJeux& listeJeux, Jeu* target)
+ {
+ 	// Trouver l'index du jeu en question
+ 	for (unsigned i = 0; i < listeJeux.nElements; i++) {
+ 		Jeu* jeu = listeJeux.elements[i];
+ 		if (jeu == target) {
+ 			for (auto j = i; j < listeJeux.nElements -1; j++) 
+ 				listeJeux.elements[j] = listeJeux.elements[j + 1];
+ 			listeJeux.nElements--;
+ 			break;	
+ 		}
+ 	}
+ }
 
 
 Jeu* lireJeu(istream& fichier)
@@ -429,17 +442,67 @@ Jeu* lireJeu(istream& fichier)
 //TODO: Fonction pour détruire un jeu (libération de mémoire allouée).
 // TIP: Afficher un message lorsque le jeu est détruit pour aider au débogage.
 // Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-
+ void detruireJeu(Jeu* jeu) {
+ 	for (unsigned i = 0; i < jeu->designers.nElements; i++) {
+ 		Designer* designer = jeu->designers.elements[i];
+ 		enleverJeu(designer->listeJeuxParticipes, jeu);
+ 		//désallouer le designer s’il n’est plus dans aucun jeu
+ 		if (designer->listeJeuxParticipes.nElements == 0) {
+ 			//La mémoire liée à un designer doit être aussi libérée
+ 			delete[] designer->listeJeuxParticipes.elements;
+ 			delete designer;
+ 		}
+ 	}
+ 	delete[] jeu->designers.elements; //incluant le tableau dynamique de designers
+ 	delete jeu;
+ }
 
 //TODO: Fonction pour détruire une ListeJeux et tous ses jeux.
+ void detruireListeJeux(ListeJeux& listeJeu) {
+ 	for (unsigned i = 0; i < listeJeu.nElements; i++) {
+ 		detruireJeu(listeJeu.elements[i]);
+ 	}
+     delete[] listeJeu.elements;
+ }
 
 //TODO: Fonction pour afficher les infos d'un designer.
+ void afficherInfoDesigner(const Designer* designer){
+ 	cout << "Nom: " << designer->nom << "\n";
+ 	cout << "Annee de naissance: " << designer->anneeNaissance << "\n";
+ 	cout << "Pays: " << designer->pays << "\n";
+ 	cout << "Liste des jeux participes: " << "\n";
+ 	for (unsigned i = 0; i < designer->listeJeuxParticipes.nElements; i++) {
+ 		Jeu* jeu = designer->listeJeuxParticipes.elements[i];
+ 		cout << " - " << jeu->titre << endl;
+ 	}
+ }
 
 //TODO: Fonction pour afficher les infos d'un jeu ainsi que ses designers.
+ void afficherJeu(const Jeu* jeu)
+ {
+ 	cout << "Titre: " << jeu->titre << "\n";
+ 	cout << "Annee de sortie: " << jeu->anneeSortie << "\n";
+ 	cout << "Developpeur: " << jeu->developpeur << "\n";
+ 	cout << "List des designers: " << "\n";
+ 	for (unsigned i = 0; i < jeu->designers.nElements; i++) {
+ 		Designer* designer = jeu->designers.elements[i];
+ 		cout << " - " << designer->nom << endl;
+ 	}
+ }
 
 
 //TODO: Fonction pour afficher tous les jeux de ListeJeux, séparés par un ligne.
 // Votre ligne de séparation doit être différent de celle utilisée dans le main.
+ void afficherListeJeux(const ListeJeux& liste)
+ {
+ 	const string separateur = "\n\033[36m────────────────────────────────────────\033[0m\n";
+ 	for (unsigned i = 0; i < liste.nElements; i++) {
+ 		cout << "Jeu #" << i + 1 << "\n";
+ 		afficherJeu(liste.elements[i]);
+ 		if (i != liste.nElements) 
+ 			cout << separateur;
+ 	}
+ }
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
@@ -459,10 +522,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	cout << ligneSeparation << endl;
 	cout << "Premier jeu de la liste :" << endl;
 	//TODO: Afficher le premier jeu de la liste (en utilisant la fonction).  Devrait être Chrono Trigger.
+ 	afficherJeu(listeJeux.elements[0]);
 
 	cout << ligneSeparation << endl;
 
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
+ 	afficherListeJeux(listeJeux);
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
 
