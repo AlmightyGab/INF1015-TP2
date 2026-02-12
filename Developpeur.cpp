@@ -7,7 +7,6 @@
 using namespace std;
 
 
-
 Developpeur::Developpeur(const string& nom, const ListeJeux& listeJeux)
     : nom_(nom), jeux_(listeJeux)
 {
