@@ -433,6 +433,17 @@ Jeu* lireJeu(istream& fichier)
  	for ([[maybe_unused]] int n : iter::range(nElements)) {
  		//TODO: Ajouter le jeu à la ListeJeux.
  		Jeu* jeu = lireJeu(fichier);
+		//nous voulons qu’en mémoire l’allocation soit faite une seule fois par designer différent
+		for (unsigned i = 0; i < jeu->designers.nElements; i++) {
+	 		Designer* designer = jeu->designers.elements[i];
+	 		Designer* designerTrouve = trouverDesigner(span(listeJeux.elements, listeJeux.nElements), designer->nom); //existe 
+			if (designerTrouve != nullptr){ //si designer existe deja
+				jeu->designers.elements[i] = designerTrouve;
+				ajouterJeu(designerTrouve->listeJeuxParticipes, jeu);
+				delete[] designer->listeJeuxParticipes.elements;
+                delete designer;
+			}
+		}
  		ajouterJeu(listeJeux, jeu);
  	}
 
