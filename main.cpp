@@ -569,10 +569,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     listeDev.afficher();
 
     auto listeJeuxVide = ListeJeux{0, 1, nullptr};
-	auto vecDevs = vector<Developpeur>
     // Boucle d'ajout des devs dans la liste de devs
-    for (Jeu* jeu : spanJeux) {
-        Developpeur* dev = new Developpeur(jeu->developpeur, listeJeuxVide);
+    for (int index : range(spanJeux.size())) {
+		Developpeur* dev = new Developpeur(spanJeux[index]->developpeur, listeJeuxVide);
 		listeDev.ajouterDeveloppeur(dev);
 	}
     listeDev.afficher();
@@ -582,11 +581,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	// Zone de destruction des pointeurs
 	for (Jeu* jeu : spanJeux) {
-		delete[] jeu->designers.elements;
+		delete [] jeu->designers.elements;
 		delete jeu;
 	}
-
-	for (Jeu* jeu : spanJeux) {
-
+	for (unsigned i = 0; i < listeDev.obtenirNombreElements(); i++) {
+		delete listeDev.obtenirElements()[i];
 	}
+	listeDev.detruireListe();
+
 }

@@ -21,6 +21,12 @@ public:
 
 	void retirerDeveloppeur(Developpeur* dev);
 	
+	// Utile pour cleanup de la pile et eviter les fuites de memoire
+	inline Developpeur** obtenirElements() const {return elements_;};
+	inline unsigned obtenirNombreElements() const {return nElements_;};
+
+	inline void detruireListe() { if (nElements_ == 0) delete [] elements_; else return;}
+
 private:
 	// Methode privees
 	int trouverIndexDev(const Developpeur* dev) const;
@@ -31,3 +37,4 @@ private:
 	unsigned capacite_;
 	Developpeur** elements_;
 };
+
