@@ -410,19 +410,20 @@ Jeu* lireJeu(istream& fichier)
 	return targetJeu; //TODO: Retourner le pointeur vers le nouveau jeu.
 }
 
-ListeJeux creerListeJeux(const string& nomFichier)
-{
-	ifstream fichier(nomFichier, ios::binary);
-	fichier.exceptions(ios::failbit);
-	int nElements = lireUint16(fichier);
-	ListeJeux listeJeux = {};
-	for ([[maybe_unused]] int n : iter::range(nElements))
-	{
-		lireJeu(fichier); //TODO: Ajouter le jeu à la ListeJeux.
-	}
+ ListeJeux creerListeJeux(const string& nomFichier)
+ {
+ 	ifstream fichier(nomFichier, ios::binary);
+ 	fichier.exceptions(ios::failbit);
+ 	int nElements = lireUint16(fichier);
+ 	ListeJeux listeJeux = {};
+ 	for ([[maybe_unused]] int n : iter::range(nElements)) {
+ 		//TODO: Ajouter le jeu à la ListeJeux.
+ 		Jeu* jeu = lireJeu(fichier);
+ 		ajouterJeu(listeJeux, jeu);
+ 	}
 
-	return {}; //TODO: Renvoyer la ListeJeux.
-}
+ 	return listeJeux; //TODO: Renvoyer la ListeJeux.
+ }
 
 //TODO: Fonction pour détruire un jeu (libération de mémoire allouée).
 // TIP: Afficher un message lorsque le jeu est détruit pour aider au débogage.
@@ -451,7 +452,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
 
-	creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
+	ListeJeux listeJeux = creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
 
 	static const string ligneSeparation = "\n\033[35m════════════════════════════════════════\033[0m\n";
 	cout << ligneSeparation << endl;
