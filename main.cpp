@@ -276,6 +276,7 @@
 #include "Jeu.hpp"
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include "include/cppitertools/range.hpp"
 #include "include/gsl/span"
 #include "include/bibliotheque_cours.hpp"
@@ -555,4 +556,37 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	detruireListeJeux(listeJeux);	
 
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
+
+
+
+	/* ------------ PARTIE 2 --------------------------------------------- */
+	cout << ligneSeparation << endl;
+    cout << "Maintenant prend place la partie 2 du TD." << endl;
+
+    span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
+    ListeDeveloppeurs listeDev = ListeDeveloppeurs();
+    cout << "Voici la liste des developpeurs, vide:" << endl;
+    listeDev.afficher();
+
+    auto listeJeuxVide = ListeJeux{0, 1, nullptr};
+	auto vecDevs = vector<Developpeur>
+    // Boucle d'ajout des devs dans la liste de devs
+    for (Jeu* jeu : spanJeux) {
+        Developpeur* dev = new Developpeur(jeu->developpeur, listeJeuxVide);
+		listeDev.ajouterDeveloppeur(dev);
+	}
+    listeDev.afficher();
+
+
+	cout << ligneSeparation << endl;
+
+	// Zone de destruction des pointeurs
+	for (Jeu* jeu : spanJeux) {
+		delete[] jeu->designers.elements;
+		delete jeu;
+	}
+
+	for (Jeu* jeu : spanJeux) {
+
+	}
 }
