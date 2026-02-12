@@ -57,5 +57,3 @@ void Developpeur::afficherJeux() const
         cout << " -> " << jeux_.elements[i]->titre << "\n";
     cout << separateur;
 }
-
-int main() {return 0;}

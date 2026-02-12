@@ -94,5 +94,3 @@ void ListeDeveloppeurs::retirerDeveloppeur(Developpeur* dev)
         elements_[i] = elements_[i + 1];
     nElements_--;
 }
-
-int main() {return 0;}
