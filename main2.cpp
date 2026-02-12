@@ -173,13 +173,23 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
 
-	creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
+	ListeJeux listeJeuxGlobale = creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
 
 	static const string ligneSeparation = "\n\033[35m════════════════════════════════════════\033[0m\n";
 	cout << ligneSeparation << endl;
-    cout << "Voici maintenant la partie 2 du TD." << endl;
+    cout << "Maintenant prend place la partie 2 du TD." << endl;
 
-    
+    span<Jeu*> spanJeux(listeJeuxGlobale.elements, listeJeuxGlobale.nElements);
+    ListeDeveloppeurs listeDev = ListeDeveloppeurs();
+    cout << "Voici la liste des developpeurs, vide:" << endl;
+    listeDev.afficher();
+
+    auto listeJeuxVide = ListeJeux{0, 1, nullptr};
+    // Boucle d'ajout des devs dans la liste de devs
+    for (Jeu* jeu : spanJeux) {
+        auto dev = Developpeur(jeu->developpeur, listeJeuxVide);
+
+    }
 
 
 	cout << ligneSeparation << endl;
