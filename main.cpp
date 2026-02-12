@@ -276,11 +276,13 @@
 #include "Jeu.hpp"
 #include <iostream>
 #include <fstream>
-#include "ListeJeux.hpp"
 #include "include/cppitertools/range.hpp"
 #include "include/gsl/span"
 #include "include/bibliotheque_cours.hpp"
 #include "include/verification_allocation.hpp"
+#include "ListeJeux.hpp"
+#include "Developpeur.hpp"
+#include "ListeDeveloppeurs.hpp"
 
 #include "include/debogage_memoire.hpp"  // Ajout des numéros de ligne des "new" dans le rapport de fuites.  Doit être après les include du système, qui peuvent utiliser des "placement new" (non supporté par notre ajout de numéros de lignes).
 
