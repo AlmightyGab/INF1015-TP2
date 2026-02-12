@@ -541,6 +541,15 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
  	afficherListeJeux(listeJeux);
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
+	Designer* designer = trouverDesigner(span(listeJeux.elements, listeJeux.nElements), "Rob Pardo"); //existe
+	afficherInfoDesigner(designer);
+	cout << ligneSeparation << endl;
+	trouverDesigner(span(listeJeux.elements, listeJeux.nElements), "Ab Cde"); //existe pas
+	Jeu* target = listeJeux.elements[listeJeux.nElements -1];
+	enleverJeu(listeJeux, target);
+	detruireJeu(target);
+	cout << ligneSeparation << endl;
+	detruireListeJeux(listeJeux);	
 
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
