@@ -276,9 +276,9 @@
 #include "Jeu.hpp"
 #include <iostream>
 #include <fstream>
-#include <span>
 #include "ListeJeux.hpp"
 #include "include/cppitertools/range.hpp"
+#include "include/gsl/span"
 #include "include/bibliotheque_cours.hpp"
 #include "include/verification_allocation.hpp"
 
@@ -286,6 +286,7 @@
 
 using namespace std;
 using namespace iter;
+using namespace gsl;
 
 #pragma region "Fonctions de base pour vous aider"
 typedef uint8_t UInt8;
