@@ -337,10 +337,12 @@ Designer* lireDesigner(istream& fichier)
 	ptrDesigner->nom = designer.nom;
 	ptrDesigner->anneeNaissance = designer.anneeNaissance;
 	ptrDesigner->pays = designer.pays;
-	cout << "l'allocation du designer est réussie pour aider au débogage: " << ptrDesigner->nom << endl;
+	ptrDesigner->listeJeuxParticipes.nElements = 0;
+	ptrDesigner->listeJeuxParticipes.capacite = 0;
+	cout << "l'allocation du designer est réussie - débogage: " << ptrDesigner->nom << endl;
 
 
-	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
+	//cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
 	return ptrDesigner; //TODO: Retourner le pointeur vers le designer crée.
 }
 
@@ -393,7 +395,8 @@ Jeu* lireJeu(istream& fichier)
 	// TIP: Afficher un message lorsque l'allocation du jeu est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
 	Jeu* targetJeu = new Jeu(jeu);
-	cout << targetJeu->titre << " added" << endl;
+	targetJeu->designers.elements = new Designer* [jeu.designers.nElements];
+	cout << "l'allocation du jeu est réussie - débogage" << targetJeu->titre << endl;
 
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
 		Designer* designer = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
