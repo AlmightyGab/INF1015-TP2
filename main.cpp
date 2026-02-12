@@ -310,7 +310,18 @@ string lireString(istream& fichier)
 #pragma endregion
 
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
-
+Designer* trouverDesigner(span<Jeu*> listeJeux, const string& nomDesignerRecherche)
+{
+	for (Jeu* jeu : listeJeux) {
+		for (unsigned i = 0; i < jeu->designers.nElements; i++) {
+			Designer* designer = jeu->designers.elements[i];
+			if (designer->nom == nomDesignerRecherche) {
+				return designer;
+			}
+		}
+	}
+	return nullptr; //return nullptr si le designer n’est pas trouvé
+}
 
 Designer* lireDesigner(istream& fichier)
 {
@@ -322,15 +333,50 @@ Designer* lireDesigner(istream& fichier)
 	//TODO: Ajouter en mémoire le designer lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du designer est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
+	Designer* ptrDesigner = new Designer;
+	ptrDesigner->nom = designer.nom;
+	ptrDesigner->anneeNaissance = designer.anneeNaissance;
+	ptrDesigner->pays = designer.pays;
+	cout << "l'allocation du designer est réussie pour aider au débogage: " << ptrDesigner->nom << endl;
 
 
 	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
-	return {}; //TODO: Retourner le pointeur vers le designer crée.
+	return ptrDesigner; //TODO: Retourner le pointeur vers le designer crée.
 }
 
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
+void agrandirListeJeux(ListeJeux& listeJeux)
+{
+	// Si capacite initiale nulle
+	if (listeJeux.capacite == 0) {
+		listeJeux.capacite = 1;
+		listeJeux.elements = new Jeu * [listeJeux.capacite];
+		return;
+	}
+
+	// Si capacite insuffisante
+	if (listeJeux.nElements >= listeJeux.capacite) {
+		unsigned nouvelleCapacite = listeJeux.capacite * 2;
+		// Boucle de reallocation
+		Jeu** tableauAgrandi = new Jeu * [nouvelleCapacite];
+		// Copie des jeux dans le nouveau tableau
+		for (unsigned i = 0; i < listeJeux.nElements; ++i)
+			tableauAgrandi[i] = listeJeux.elements[i];
+		delete[] listeJeux.elements;
+		// Mise a jour 
+		listeJeux.elements = tableauAgrandi;
+		listeJeux.capacite = nouvelleCapacite;
+	}
+}
 
 //TODO: Fonction pour ajouter un Jeu à ListeJeux.
+void ajouterJeu(ListeJeux& listeJeux, Jeu* jeu)
+{
+	// Verification de la taille du tableau et ajustement
+	agrandirListeJeux(listeJeux);
+	// Ajout du jeu au tableau
+	listeJeux.elements[listeJeux.nElements++] = jeu;
+}
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
 
