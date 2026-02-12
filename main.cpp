@@ -342,6 +342,7 @@ Designer* lireDesigner(istream& fichier)
 	ptrDesigner->pays = designer.pays;
 	ptrDesigner->listeJeuxParticipes.nElements = 0;
 	ptrDesigner->listeJeuxParticipes.capacite = 0;
+	ptrDesigner->listeJeuxParticipes.elements = nullptr;
 	cout << "l'allocation du designer est réussie - débogage: " << ptrDesigner->nom << endl;
 
 
