@@ -177,8 +177,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	static const string ligneSeparation = "\n\033[35m════════════════════════════════════════\033[0m\n";
 	cout << ligneSeparation << endl;
+    cout << "Voici maintenant la partie 2 du TD." << endl;
 
     
+
 
 	cout << ligneSeparation << endl;
 }
